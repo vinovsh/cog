@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import Icon from "@/components/ui/Icon";
-import PhotoFrame from "@/components/ui/PhotoFrame";
 import { news, newsCategories } from "@/data";
+import { stagger } from "@/lib/reveal";
 
 export default function NewsPage() {
   const [cat, setCat] = useState("All News");
@@ -27,8 +28,17 @@ export default function NewsPage() {
           {/* Main list */}
           <div>
             {/* Featured */}
-            <article className="reveal card mb-8 grid overflow-hidden md:grid-cols-2">
-              <PhotoFrame seed={featured.imageSeed} icon="megaphone" className="min-h-56" />
+            <article className="reveal reveal-zoom card group mb-8 grid overflow-hidden md:grid-cols-2">
+              <div className="relative min-h-56 overflow-hidden">
+                <Image
+                  src={featured.image}
+                  alt={featured.title}
+                  fill
+                  preload
+                  sizes="(min-width: 1024px) 40vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
               <div className="flex flex-col justify-center p-7">
                 <span className="mb-3 inline-flex w-fit rounded-md bg-brand-blue px-2.5 py-1 text-[0.65rem] font-bold uppercase text-white">
                   Featured
@@ -42,10 +52,19 @@ export default function NewsPage() {
               </div>
             </article>
 
-            <div className="grid gap-6 sm:grid-cols-2">
-              {list.map((n) => (
-                <article key={n.id} className="reveal card group flex flex-col overflow-hidden">
-                  <PhotoFrame seed={n.imageSeed} icon="bell" className="aspect-[16/10]" />
+            {/* Keyed by category so the list replays its entrance on every change */}
+            <div key={cat} className="grid gap-6 sm:grid-cols-2">
+              {list.map((n, i) => (
+                <article key={n.id} style={stagger(i, 90)} className="pop-in card group flex flex-col overflow-hidden hover:-translate-y-1">
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={n.image}
+                      alt={n.title}
+                      fill
+                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
                   <div className="flex flex-1 flex-col p-5">
                     <div className="flex items-center gap-2 text-xs">
                       <span className="rounded-full bg-brand-green-50 px-2 py-0.5 font-medium text-brand-green-700">
@@ -71,7 +90,7 @@ export default function NewsPage() {
 
           {/* Sidebar */}
           <aside className="space-y-6">
-            <div className="card p-6">
+            <div className="reveal reveal-right card p-6">
               <h3 className="mb-4 font-semibold text-brand-navy">Categories</h3>
               <ul className="space-y-1">
                 {newsCategories.map((c) => (
@@ -92,8 +111,8 @@ export default function NewsPage() {
               </ul>
             </div>
 
-            <div className="rounded-2xl bg-gradient-to-br from-brand-blue-600 to-brand-navy p-6 text-white">
-              <Icon name="mail" className="h-8 w-8 text-brand-green" />
+            <div style={stagger(1, 150)} className="reveal reveal-right rounded-2xl bg-gradient-to-br from-brand-blue-600 to-brand-navy p-6 text-white">
+              <Icon name="mail" className="cog-float h-8 w-8 text-brand-green" />
               <h3 className="mt-3 font-semibold">Subscribe to Newsletter</h3>
               <p className="mt-1 text-sm text-white/80">
                 Get the latest news and announcements in your inbox.

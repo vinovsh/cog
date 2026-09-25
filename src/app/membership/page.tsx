@@ -4,6 +4,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
 import Accordion from "@/components/ui/Accordion";
 import { membershipBenefits, membershipTiers, membershipFaqs } from "@/data";
+import { stagger } from "@/lib/reveal";
 
 export const metadata: Metadata = { title: "Membership" };
 
@@ -21,9 +22,9 @@ export default function MembershipPage() {
         <div className="container-cog">
           <SectionHeading center eyebrow="Why Join COG?" title="Benefits of Membership" />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {membershipBenefits.map((b) => (
-              <article key={b.title} className="reveal card p-6">
-                <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-green-50 text-brand-green-700">
+            {membershipBenefits.map((b, i) => (
+              <article key={b.title} style={stagger(i % 3, 130)} className="reveal card group p-6 hover:-translate-y-1">
+                <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-green-50 text-brand-green-700 transition-all duration-300 group-hover:scale-110 group-hover:bg-brand-green group-hover:text-white">
                   <Icon name={b.icon} className="h-6 w-6" />
                 </span>
                 <h3 className="font-semibold text-brand-navy">{b.title}</h3>
@@ -37,7 +38,7 @@ export default function MembershipPage() {
       {/* Categories + registration */}
       <section className="section bg-gray-50/70">
         <div className="container-cog grid gap-8 lg:grid-cols-2">
-          <div className="reveal card p-8">
+          <div className="reveal reveal-left card p-8">
             <h3 className="text-xl font-bold text-brand-navy">Membership Categories</h3>
             <div className="mt-6 overflow-hidden rounded-xl border border-gray-100">
               <div className="grid grid-cols-2 bg-brand-navy px-5 py-3 text-sm font-semibold text-white">
@@ -61,7 +62,7 @@ export default function MembershipPage() {
             </div>
           </div>
 
-          <div className="reveal flex flex-col rounded-2xl bg-gradient-to-br from-brand-blue-600 to-brand-navy p-8 text-white">
+          <div style={stagger(1, 150)} className="reveal reveal-right flex flex-col rounded-2xl bg-gradient-to-br from-brand-blue-600 to-brand-navy p-8 text-white">
             <h3 className="text-xl font-bold">Membership Registration</h3>
             <p className="mt-3 text-white/85">
               Please fill in the form below to apply for COG membership. Our
@@ -82,7 +83,7 @@ export default function MembershipPage() {
             <div className="mt-8 rounded-xl bg-white/10 p-5 backdrop-blur">
               <p className="text-sm font-semibold">Membership Certificate Preview</p>
               <div className="mt-3 rounded-lg border-4 border-double border-white/40 bg-white/95 p-5 text-center text-brand-navy">
-                <Icon name="award" className="mx-auto h-8 w-8 text-brand-blue-600" />
+                <Icon name="award" className="cog-float mx-auto h-8 w-8 text-brand-blue-600" />
                 <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-brand-grey-light">
                   Certificate of Membership
                 </p>

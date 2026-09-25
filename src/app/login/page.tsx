@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Icon from "@/components/ui/Icon";
+import { stagger } from "@/lib/reveal";
 
 export const metadata: Metadata = { title: "Member Login" };
 
@@ -10,10 +11,10 @@ export default function LoginPage() {
       <div className="medical-dots absolute inset-0 opacity-60" aria-hidden />
       <div className="container-cog relative grid min-h-[70vh] items-center gap-10 py-16 lg:grid-cols-2">
         {/* Illustration side */}
-        <div className="hidden lg:block">
+        <div className="reveal reveal-left hidden lg:block">
           <div className="relative mx-auto flex h-80 w-80 items-center justify-center rounded-full bg-white/60 shadow-inner">
-            <div className="absolute inset-6 rounded-full border-4 border-dashed border-brand-blue/20" />
-            <Icon name="lock" className="h-24 w-24 text-brand-blue-600" />
+            <div className="absolute inset-6 animate-[spin_40s_linear_infinite] rounded-full border-4 border-dashed border-brand-blue/20" />
+            <Icon name="lock" className="cog-float h-24 w-24 text-brand-blue-600" />
           </div>
           <div className="mt-8 text-center">
             <h2 className="text-2xl font-bold text-brand-navy">Member Portal</h2>
@@ -25,7 +26,7 @@ export default function LoginPage() {
         </div>
 
         {/* Form card */}
-        <div className="mx-auto w-full max-w-md rounded-3xl bg-white p-8 shadow-xl sm:p-10">
+        <div style={stagger(1, 150)} className="reveal reveal-right mx-auto w-full max-w-md rounded-3xl bg-white p-8 shadow-xl sm:p-10">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-brand-navy">Welcome Back!</h1>
             <p className="mt-1 text-sm text-brand-grey">Log in to access the member portal.</p>

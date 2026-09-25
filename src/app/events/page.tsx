@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
-import PhotoFrame from "@/components/ui/PhotoFrame";
 import { upcomingEvents, pastConferences, brochures } from "@/data";
+import { stagger } from "@/lib/reveal";
 
 export const metadata: Metadata = { title: "Conferences & Events" };
 
@@ -20,8 +21,20 @@ export default function EventsPage() {
       {/* Featured conference banner */}
       <section className="section">
         <div className="container-cog">
-          <div className="reveal relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-blue-600 to-brand-navy p-8 text-white sm:p-12">
+          <div className="reveal reveal-zoom relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-blue-600 to-brand-navy p-8 text-white sm:p-12">
+            <Image
+              src="/images/news/conference-crowd.jpg"
+              alt=""
+              fill
+              preload
+              sizes="(min-width: 1280px) 1216px, 100vw"
+              className="object-cover"
+            />
+            {/* Brand tint keeps the white text readable over the photo */}
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-navy via-brand-navy/85 to-brand-blue-700/40" aria-hidden />
             <div className="medical-dots absolute inset-0 opacity-20" aria-hidden />
+            <div className="cog-float absolute -right-10 -top-10 h-56 w-56 rounded-full bg-brand-green/20 blur-3xl" aria-hidden />
+            <div className="cog-float absolute -bottom-16 right-1/4 h-48 w-48 rounded-full bg-brand-blue/30 blur-3xl [animation-delay:-3s]" aria-hidden />
             <div className="relative max-w-2xl">
               <span className="inline-block rounded-full bg-brand-green px-3 py-1 text-xs font-semibold">
                 Flagship Event
@@ -52,10 +65,11 @@ export default function EventsPage() {
         <div className="container-cog">
           <SectionHeading eyebrow="Save the date" title="Upcoming Events" />
           <div className="space-y-4">
-            {upcomingEvents.map((e) => (
+            {upcomingEvents.map((e, i) => (
               <article
                 key={e.id}
-                className="reveal card flex flex-col items-start gap-5 p-5 sm:flex-row sm:items-center"
+                style={stagger(i)}
+                className="reveal reveal-left card flex flex-col items-start gap-5 p-5 sm:flex-row sm:items-center"
               >
                 <div
                   className={`flex h-20 w-20 shrink-0 flex-col items-center justify-center rounded-2xl text-white ${
@@ -98,9 +112,20 @@ export default function EventsPage() {
             linkLabel="View All Archives"
           />
           <div className="grid gap-6 sm:grid-cols-3">
-            {pastConferences.map((c) => (
-              <article key={c.title} className="reveal card group overflow-hidden">
-                <PhotoFrame seed={c.seed} icon="presentation" label={c.year} className="aspect-[16/10]" />
+            {pastConferences.map((c, i) => (
+              <article key={c.title} style={stagger(i, 140)} className="reveal card group overflow-hidden hover:-translate-y-1">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={c.image}
+                    alt={c.title}
+                    fill
+                    sizes="(min-width: 640px) 33vw, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <span className="absolute left-3 top-3 rounded-md bg-white/90 px-2.5 py-1 text-xs font-bold text-brand-blue-700 shadow">
+                    {c.year}
+                  </span>
+                </div>
                 <div className="p-5">
                   <h3 className="font-semibold text-brand-navy group-hover:text-brand-blue-700">
                     {c.title}
@@ -120,13 +145,14 @@ export default function EventsPage() {
         <div className="container-cog">
           <SectionHeading eyebrow="Resources" title="Downloadable Brochures & Programmes" />
           <div className="grid gap-4 sm:grid-cols-2">
-            {brochures.map((b) => (
+            {brochures.map((b, i) => (
               <a
                 key={b.title}
                 href="#"
+                style={stagger(i, 90)}
                 className="reveal group flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition hover:border-brand-blue hover:shadow-md"
               >
-                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-blue-50 text-brand-blue-700">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-blue-50 text-brand-blue-700 transition-colors group-hover:bg-brand-blue group-hover:text-white">
                   <Icon name="document" className="h-6 w-6" />
                 </span>
                 <div className="flex-1">

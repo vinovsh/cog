@@ -8,6 +8,7 @@ import {
   researchCollaborations,
   downloads,
 } from "@/data";
+import { stagger } from "@/lib/reveal";
 
 export const metadata: Metadata = { title: "Research & Publications" };
 
@@ -24,9 +25,9 @@ export default function ResearchPage() {
       <section className="section">
         <div className="container-cog">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {researchAreas.map((a) => (
-              <article key={a.title} className="reveal card p-6 text-center">
-                <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-green-50 text-brand-green-700">
+            {researchAreas.map((a, i) => (
+              <article key={a.title} style={stagger(i, 120)} className="reveal card group p-6 text-center hover:-translate-y-1">
+                <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-green-50 text-brand-green-700 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-brand-green group-hover:text-white">
                   <Icon name={a.icon} className="h-7 w-7" />
                 </span>
                 <h3 className="font-semibold text-brand-navy">{a.title}</h3>
@@ -43,10 +44,11 @@ export default function ResearchPage() {
           <div>
             <SectionHeading eyebrow="By Our Members" title="Recent Publications" />
             <div className="space-y-4">
-              {publications.map((p) => (
+              {publications.map((p, i) => (
                 <article
                   key={p.title}
-                  className="reveal card flex gap-4 p-5"
+                  style={stagger(i, 90)}
+                  className="reveal reveal-left card flex gap-4 p-5"
                 >
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-blue-50 text-brand-blue-700">
                     <Icon name="book" className="h-5 w-5" />
@@ -65,8 +67,8 @@ export default function ResearchPage() {
           <div>
             <SectionHeading eyebrow="Partners" title="Research Collaborations" />
             <div className="grid gap-4 sm:grid-cols-2">
-              {researchCollaborations.map((c) => (
-                <div key={c.name} className="reveal card flex items-center gap-3 p-4">
+              {researchCollaborations.map((c, i) => (
+                <div key={c.name} style={stagger(i, 90)} className="reveal reveal-zoom card flex items-center gap-3 p-4">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-navy text-xs font-bold text-white">
                     {c.seed}
                   </span>
@@ -86,13 +88,14 @@ export default function ResearchPage() {
         <div className="container-cog">
           <SectionHeading eyebrow="Download Centre" title="Guidelines & Resources" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {downloads.map((d) => (
+            {downloads.map((d, i) => (
               <a
                 key={d.title}
                 href="#"
-                className="reveal group card flex flex-col p-6 hover:border-brand-blue"
+                style={stagger(i, 110)}
+                className="reveal group card flex flex-col p-6 hover:-translate-y-1 hover:border-brand-blue"
               >
-                <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-blue text-white">
+                <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-blue text-white transition-transform duration-300 group-hover:scale-110">
                   <Icon name="download" className="h-6 w-6" />
                 </span>
                 <p className="font-semibold text-brand-navy">{d.title}</p>

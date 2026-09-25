@@ -2,6 +2,7 @@ import Link from "next/link";
 import Logo from "./Logo";
 import { SocialIcon } from "./Header";
 import { navItems, site } from "@/lib/site";
+import { stagger } from "@/lib/reveal";
 
 const quickLinks = navItems.filter((n) =>
   ["/about", "/committee", "/membership", "/scientific-activities", "/events"].includes(n.href),
@@ -19,7 +20,7 @@ export default function Footer() {
     <footer className="mt-auto bg-brand-navy text-white/80">
       {/* Newsletter strip */}
       <div className="bg-brand-blue-700">
-        <div className="container-cog flex flex-col items-center justify-between gap-4 py-8 md:flex-row">
+        <div className="reveal container-cog flex flex-col items-center justify-between gap-4 py-8 md:flex-row">
           <div className="flex items-center gap-4">
             <span className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/60">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6 text-white">
@@ -49,7 +50,7 @@ export default function Footer() {
 
       {/* Main footer */}
       <div className="container-cog grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
+        <div style={stagger(0)} className="reveal">
           <Logo variant="light" />
           <p className="mt-4 text-sm leading-relaxed">
             Advancing cancer care through collaboration, education and research.
@@ -68,7 +69,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div>
+        <div style={stagger(1)} className="reveal">
           <h4 className="mb-4 font-semibold text-white">Quick Links</h4>
           <ul className="space-y-2.5 text-sm">
             {quickLinks.map((l) => (
@@ -81,7 +82,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div style={stagger(2)} className="reveal">
           <h4 className="mb-4 font-semibold text-white">Resources</h4>
           <ul className="space-y-2.5 text-sm">
             {resources.map((l) => (
@@ -94,7 +95,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div style={stagger(3)} className="reveal">
           <h4 className="mb-4 font-semibold text-white">Contact Us</h4>
           <ul className="space-y-3 text-sm">
             <li className="flex gap-2.5">

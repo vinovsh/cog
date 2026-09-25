@@ -141,25 +141,117 @@ body {
 /* Reveal-on-scroll helper.
    Content is visible by default (no-JS, SEO, accessibility). The hidden start
    state only applies once `reveal-ready` is set on <html> before first paint,
-   so JS users get a subtle entrance without any flash of hidden content. */
-.reveal {
-  opacity: 1;
-}
-html.reveal-ready .reveal {
+   so JS users get a subtle entrance without any flash of hidden content.
+   Uses a keyframe animation (fill-mode: backwards) rather than a transition so
+   a stagger delay (--reveal-delay) never slows down hover transitions later.
+   Variants: .reveal-left, .reveal-right, .reveal-zoom (default fades up). */
+html.reveal-ready .reveal:not(.in-view) {
   opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
 }
 html.reveal-ready .reveal.in-view {
-  opacity: 1;
-  transform: translateY(0);
+  animation: var(--reveal-anim, reveal-up) 0.8s cubic-bezier(0.22, 1, 0.36, 1)
+    var(--reveal-delay, 0ms) backwards;
 }
-@media (prefers-reduced-motion: reduce) {
-  html.reveal-ready .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+.reveal-left {
+  --reveal-anim: reveal-left;
+}
+.reveal-right {
+  --reveal-anim: reveal-right;
+}
+.reveal-zoom {
+  --reveal-anim: reveal-zoom;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
   }
 }
+@keyframes reveal-left {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+}
+@keyframes reveal-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+}
+@keyframes reveal-zoom {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+/* Plays on mount rather than on scroll, for grids whose items change with a
+   client-side filter. Re-key the parent to replay it. */
+.pop-in {
+  animation: reveal-zoom 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms)
+    backwards;
+}
+
+/* Section heading underline grows in once its heading is revealed */
+html.reveal-ready .reveal.in-view .heading-bar {
+  transform-origin: left;
+  animation: bar-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s backwards;
+}
+html.reveal-ready .reveal.in-view .heading-bar.mx-auto {
+  transform-origin: center;
+}
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Light sweep across the primary buttons on hover */
+.btn-blue,
+.btn-green {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-blue::after,
+.btn-green::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+}
+.btn-blue:hover::after,
+.btn-green:hover::after {
+  transform: translateX(120%);
+}
+.btn-blue:hover,
+.btn-green:hover {
+  box-shadow: 0 10px 24px -10px currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.reveal-ready .reveal:not(.in-view) {
+    opacity: 1;
+  }
+  html.reveal-ready .reveal.in-view,
+  html.reveal-ready .reveal.in-view .heading-bar,
+  .pop-in {
+    animation: none;
+  }
+  .btn-blue::after,
+  .btn-green::after {
+    display: none;
+  }
+}
+
+

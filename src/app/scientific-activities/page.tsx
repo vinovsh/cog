@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
+import CountUp from "@/components/ui/CountUp";
 import { scientificActivities } from "@/data";
+import { stagger } from "@/lib/reveal";
 
 export const metadata: Metadata = { title: "Scientific Activities" };
 
@@ -19,13 +21,14 @@ export default function ScientificActivitiesPage() {
         <div className="container-cog">
           <SectionHeading center eyebrow="Academic Engagement" title="What We Do" />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {scientificActivities.map((a) => (
+            {scientificActivities.map((a, i) => (
               <article
                 key={a.title}
-                className="reveal card group relative overflow-hidden p-8"
+                style={stagger(i % 3, 130)}
+                className="reveal card group relative overflow-hidden p-8 hover:-translate-y-1"
               >
                 <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-brand-blue-50 transition-transform group-hover:scale-150" />
-                <span className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-blue text-white shadow-md">
+                <span className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-blue text-white shadow-md transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
                   <Icon name={a.icon} className="h-7 w-7" />
                 </span>
                 <h3 className="relative text-lg font-bold text-brand-navy">{a.title}</h3>
@@ -39,7 +42,7 @@ export default function ScientificActivitiesPage() {
       {/* Highlight band */}
       <section className="section bg-brand-navy">
         <div className="container-cog grid items-center gap-8 text-white lg:grid-cols-[1.4fr_1fr]">
-          <div className="reveal">
+          <div className="reveal reveal-left">
             <p className="eyebrow !text-brand-green">Continuing Education</p>
             <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
               Advancing knowledge, one meeting at a time
@@ -50,14 +53,20 @@ export default function ScientificActivitiesPage() {
               treatment plans — building a culture of shared learning.
             </p>
           </div>
-          <div className="reveal grid grid-cols-3 gap-4 text-center">
+          <div className="grid grid-cols-3 gap-4 text-center">
             {[
               { v: "12+", l: "Meetings / year" },
               { v: "40+", l: "Case discussions" },
               { v: "500+", l: "Participants" },
-            ].map((s) => (
-              <div key={s.l} className="rounded-2xl bg-white/5 p-5">
-                <p className="text-2xl font-bold text-brand-green">{s.v}</p>
+            ].map((s, i) => (
+              <div
+                key={s.l}
+                style={stagger(i + 1, 130)}
+                className="reveal reveal-zoom rounded-2xl bg-white/5 p-5 ring-1 ring-white/10 transition-colors hover:bg-white/10"
+              >
+                <p className="text-2xl font-bold text-brand-green">
+                  <CountUp value={s.v} delay={200 + i * 150} />
+                </p>
                 <p className="mt-1 text-xs text-white/70">{s.l}</p>
               </div>
             ))}

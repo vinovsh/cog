@@ -4,6 +4,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
 import { site } from "@/lib/site";
 import { SocialIcon } from "@/components/layout/Header";
+import { stagger } from "@/lib/reveal";
 
 export const metadata: Metadata = { title: "Contact Us" };
 
@@ -33,8 +34,8 @@ export default function ContactPage() {
           <div>
             <SectionHeading eyebrow="Get in Touch" title="Contact Information" />
             <div className="space-y-4">
-              {details.map((d) => (
-                <div key={d.title} className="reveal flex gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+              {details.map((d, i) => (
+                <div key={d.title} style={stagger(i)} className="reveal reveal-left flex gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-blue-50 text-brand-blue-700">
                     <Icon name={d.icon} className="h-5 w-5" />
                   </span>
@@ -54,13 +55,13 @@ export default function ContactPage() {
               ))}
             </div>
 
-            <div className="mt-4 flex gap-2">
+            <div style={stagger(4)} className="reveal mt-4 flex gap-2">
               {(["facebook", "instagram", "linkedin", "youtube"] as const).map((s) => (
                 <a
                   key={s}
                   href={site.socials[s]}
                   aria-label={s}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-navy text-white hover:bg-brand-blue"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-navy text-white transition hover:-translate-y-0.5 hover:bg-brand-blue"
                 >
                   <SocialIcon name={s} className="h-4 w-4" />
                 </a>
@@ -68,9 +69,9 @@ export default function ContactPage() {
             </div>
 
             {/* Map placeholder */}
-            <div className="reveal mt-6 flex aspect-[16/9] items-center justify-center rounded-2xl bg-gradient-to-br from-brand-blue-50 to-brand-green-50 text-center">
+            <div className="reveal reveal-zoom mt-6 flex aspect-[16/9] items-center justify-center rounded-2xl bg-gradient-to-br from-brand-blue-50 to-brand-green-50 text-center">
               <div>
-                <Icon name="pin" className="mx-auto h-10 w-10 text-brand-blue-600" />
+                <Icon name="pin" className="cog-float mx-auto h-10 w-10 text-brand-blue-600" />
                 <p className="mt-2 text-sm font-medium text-brand-navy">Amrita Hospital, Kochi</p>
                 <p className="text-xs text-brand-grey-light">Embedded Google Map (Phase 2)</p>
               </div>
@@ -78,7 +79,7 @@ export default function ContactPage() {
           </div>
 
           {/* Form */}
-          <div className="reveal card p-8">
+          <div style={stagger(1, 150)} className="reveal reveal-right card p-8">
             <SectionHeading eyebrow="Send a Message" title="We'll get back to you" />
             <form className="grid gap-5">
               <div className="grid gap-5 sm:grid-cols-2">

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
-import PhotoFrame from "@/components/ui/PhotoFrame";
 import { missionPoints, values, objectives } from "@/data";
+import { stagger } from "@/lib/reveal";
 
 export const metadata: Metadata = { title: "About Us" };
 
@@ -37,7 +38,7 @@ export default function AboutPage() {
       {/* History */}
       <section className="section">
         <div className="container-cog grid items-center gap-10 lg:grid-cols-2">
-          <div className="reveal">
+          <div className="reveal reveal-left">
             <SectionHeading eyebrow="Our Story" title="Our History" />
             <div className="space-y-4 text-brand-grey leading-relaxed">
               <p>
@@ -59,11 +60,18 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-          <PhotoFrame
-            seed="cog-history"
-            icon="users"
-            className="reveal aspect-[4/3] rounded-3xl shadow-xl"
-          />
+          <div style={stagger(1, 150)} className="reveal reveal-right">
+            <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl">
+              <Image
+                src="/images/about/main.webp"
+                alt="COG doctors and nurses caring for a patient in a hospital ward"
+                fill
+                preload
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -72,8 +80,8 @@ export default function AboutPage() {
         <div className="container-cog">
           <SectionHeading center eyebrow="What Drives Us" title="Vision, Mission & Values" />
           <div className="grid gap-6 md:grid-cols-3">
-            {pillars.map((p) => (
-              <article key={p.title} className="reveal card p-8">
+            {pillars.map((p, i) => (
+              <article key={p.title} style={stagger(i, 140)} className="reveal card p-8">
                 <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-blue-50 text-brand-blue-700">
                   <Icon name={p.icon} className="h-7 w-7" />
                 </span>
@@ -102,6 +110,7 @@ export default function AboutPage() {
             {objectives.map((o, i) => (
               <div
                 key={o}
+                style={stagger(i % 2, 120)}
                 className="reveal flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"
               >
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-green-50 text-sm font-bold text-brand-green-700">

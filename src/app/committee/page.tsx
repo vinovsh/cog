@@ -1,17 +1,30 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Avatar from "@/components/ui/Avatar";
 import { officeBearers, executiveMembers, advisoryBoard, type Member } from "@/data";
 import { SocialIcon } from "@/components/layout/Header";
+import { stagger } from "@/lib/reveal";
 
-function MemberCard({ m, large }: { m: Member; large?: boolean }) {
+// Placeholder portraits until real member photos are available; alternated by position
+const portraits = ["/images/doctors/doctor-1.avif", "/images/doctors/doctor-2.avif"];
+
+function MemberCard({ m, large, index = 0 }: { m: Member; large?: boolean; index?: number }) {
   return (
-    <article className="reveal card group p-6 text-center">
-      <Avatar
-        seed={m.photoSeed}
-        className={`mx-auto ${large ? "h-28 w-28 text-2xl" : "h-20 w-20 text-xl"}`}
-      />
+    <article style={stagger(index % 5, 100)} className="reveal reveal-zoom card group p-6 text-center">
+      <div
+        className={`relative mx-auto overflow-hidden rounded-full bg-brand-blue-50 ring-4 ring-brand-blue-50 transition-shadow duration-300 group-hover:ring-brand-blue/30 ${
+          large ? "h-28 w-28" : "h-20 w-20"
+        }`}
+      >
+        <Image
+          src={portraits[index % portraits.length]}
+          alt={m.name}
+          fill
+          sizes={large ? "112px" : "80px"}
+          className="object-cover object-[50%_20%] transition-transform duration-500 group-hover:scale-110"
+        />
+      </div>
       <h3 className={`mt-4 font-semibold text-brand-navy ${large ? "text-lg" : ""}`}>{m.name}</h3>
       <p className="text-sm font-medium text-brand-blue-700">{m.role}</p>
       {m.specialty && <p className="mt-0.5 text-xs text-brand-grey-light">{m.specialty}</p>}
@@ -39,8 +52,8 @@ export default function CommitteePage() {
         <div className="container-cog">
           <SectionHeading center eyebrow="Leadership" title="Office Bearers" />
           <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-3">
-            {officeBearers.map((m) => (
-              <MemberCard key={m.name} m={m} large />
+            {officeBearers.map((m, i) => (
+              <MemberCard key={m.name} m={m} large index={i} />
             ))}
           </div>
         </div>
@@ -50,8 +63,8 @@ export default function CommitteePage() {
         <div className="container-cog">
           <SectionHeading center eyebrow="Our Team" title="Executive Committee Members" />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {executiveMembers.map((m) => (
-              <MemberCard key={m.name} m={m} />
+            {executiveMembers.map((m, i) => (
+              <MemberCard key={m.name} m={m} index={i} />
             ))}
           </div>
         </div>
@@ -61,8 +74,8 @@ export default function CommitteePage() {
         <div className="container-cog">
           <SectionHeading center eyebrow="Guidance" title="Advisory Board Members" />
           <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {advisoryBoard.map((m) => (
-              <MemberCard key={m.name} m={m} />
+            {advisoryBoard.map((m, i) => (
+              <MemberCard key={m.name} m={m} index={i} />
             ))}
           </div>
         </div>

@@ -93,7 +93,8 @@ export type NewsItem = {
   excerpt: string;
   category: string;
   featured?: boolean;
-  imageSeed: string;
+  /** Path under /public */
+  image: string;
 };
 export const news: NewsItem[] = [
   {
@@ -104,7 +105,7 @@ export const news: NewsItem[] = [
       "Join us for two days of insightful sessions, workshops and networking with leading oncology professionals.",
     category: "Conferences",
     featured: true,
-    imageSeed: "conf",
+    image: "/images/news/conference-crowd.jpg",
   },
   {
     id: "journal-club",
@@ -112,7 +113,7 @@ export const news: NewsItem[] = [
     date: "MAY 15, 2025",
     excerpt: "Monthly discussions on recent advances in oncology, open to all members.",
     category: "Announcements",
-    imageSeed: "journal",
+    image: "/images/news/patient-care.jpg",
   },
   {
     id: "award-nair",
@@ -120,7 +121,7 @@ export const news: NewsItem[] = [
     date: "MAY 10, 2025",
     excerpt: "Awarded at the National Oncology Summit 2025 for outstanding research contribution.",
     category: "Achievements",
-    imageSeed: "award",
+    image: "/images/news/event-stage.jpg",
   },
   {
     id: "cme-22",
@@ -128,7 +129,7 @@ export const news: NewsItem[] = [
     date: "MAY 05, 2025",
     excerpt: "Theme: Advances in Targeted Therapy. Register early to reserve your seat.",
     category: "Conferences",
-    imageSeed: "cme",
+    image: "/images/news/emergency-care.avif",
   },
   {
     id: "membership-drive",
@@ -136,7 +137,7 @@ export const news: NewsItem[] = [
     date: "APR 10, 2025",
     excerpt: "Become a part of Kerala's leading multidisciplinary oncology community.",
     category: "Membership",
-    imageSeed: "member",
+    image: "/images/news/conference-crowd.jpg",
   },
   {
     id: "palliative",
@@ -144,7 +145,7 @@ export const news: NewsItem[] = [
     date: "APR 02, 2025",
     excerpt: "Over 120 delegates attended the interactive sessions on palliative oncology.",
     category: "Achievements",
-    imageSeed: "palliative",
+    image: "/images/news/patient-care.jpg",
   },
 ];
 export const newsCategories = [
@@ -220,10 +221,10 @@ export const scientificActivities: { icon: IconName; title: string; desc: string
 ];
 
 /* ------------------------ Past conferences ----------------------- */
-export const pastConferences: { title: string; place: string; year: string; seed: string }[] = [
-  { title: "Annual Conference 2024", place: "Kochi, Kerala", year: "2024", seed: "c24" },
-  { title: "Annual Conference 2023", place: "Kochi, Kerala", year: "2023", seed: "c23" },
-  { title: "Annual Conference 2022", place: "Kochi, Kerala", year: "2022", seed: "c22" },
+export const pastConferences: { title: string; place: string; year: string; image: string }[] = [
+  { title: "Annual Conference 2024", place: "Kochi, Kerala", year: "2024", image: "/images/news/event-stage.jpg" },
+  { title: "Annual Conference 2023", place: "Kochi, Kerala", year: "2023", image: "/images/news/patient-care.jpg" },
+  { title: "Annual Conference 2022", place: "Kochi, Kerala", year: "2022", image: "/images/news/emergency-care.avif" },
 ];
 export const brochures: { title: string; size: string }[] = [
   { title: "COG Annual Conference 2025 — Brochure", size: "PDF · 2.4 MB" },

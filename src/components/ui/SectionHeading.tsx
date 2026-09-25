@@ -15,7 +15,7 @@ export default function SectionHeading({
 }) {
   return (
     <div
-      className={`mb-10 flex flex-col gap-3 ${
+      className={`reveal mb-10 flex flex-col gap-3 ${
         center ? "items-center text-center" : "sm:flex-row sm:items-end sm:justify-between"
       }`}
     >
@@ -23,7 +23,7 @@ export default function SectionHeading({
         {eyebrow && <p className="eyebrow mb-2">{eyebrow}</p>}
         <h2 className="text-2xl font-bold text-brand-navy sm:text-3xl">{title}</h2>
         <span
-          className={`mt-3 block h-1 w-16 rounded-full bg-brand-green ${
+          className={`heading-bar mt-3 block h-1 w-16 rounded-full bg-brand-green ${
             center ? "mx-auto" : ""
           }`}
         />

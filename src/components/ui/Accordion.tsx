@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Icon from "./Icon";
+import { stagger } from "@/lib/reveal";
 
 export default function Accordion({ items }: { items: { q: string; a: string }[] }) {
   const [open, setOpen] = useState<number | null>(0);
@@ -10,7 +11,11 @@ export default function Accordion({ items }: { items: { q: string; a: string }[]
       {items.map((item, i) => {
         const isOpen = open === i;
         return (
-          <div key={item.q} className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+          <div
+            key={item.q}
+            style={stagger(i, 90)}
+            className="reveal overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md"
+          >
             <button
               onClick={() => setOpen(isOpen ? null : i)}
               className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"

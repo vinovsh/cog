@@ -5,12 +5,14 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import Avatar from "@/components/ui/Avatar";
+import CountUp from "@/components/ui/CountUp";
 import {
   adminStats,
   upcomingEvents,
   recentMembers,
   recentActivities,
 } from "@/data";
+import { stagger } from "@/lib/reveal";
 
 const nav: { label: string; icon: IconName; active?: boolean }[] = [
   { label: "Dashboard", icon: "dashboard", active: true },
@@ -107,13 +109,19 @@ export default function AdminDashboard() {
         <main className="flex-1 space-y-6 p-4 sm:p-6">
           {/* Stat cards */}
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {adminStats.map((s) => (
-              <div key={s.label} className="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+            {adminStats.map((s, i) => (
+              <div
+                key={s.label}
+                style={stagger(i, 90)}
+                className="reveal flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
+              >
                 <span className={`flex h-12 w-12 items-center justify-center rounded-xl ${accentMap[s.accent]}`}>
                   <Icon name={s.icon} className="h-6 w-6" />
                 </span>
                 <div>
-                  <p className="text-2xl font-bold text-brand-navy">{s.value}</p>
+                  <p className="text-2xl font-bold text-brand-navy">
+                    <CountUp value={s.value} duration={1500} delay={i * 90} />
+                  </p>
                   <p className="text-sm text-brand-grey-light">{s.label}</p>
                 </div>
               </div>
@@ -122,7 +130,7 @@ export default function AdminDashboard() {
 
           <div className="grid gap-6 lg:grid-cols-3">
             {/* Upcoming events */}
-            <div className="lg:col-span-2 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+            <div style={stagger(2, 150)} className="reveal lg:col-span-2 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="font-bold text-brand-navy">Upcoming Events</h2>
                 <button className="text-sm font-medium text-brand-blue-700">View All Events</button>
@@ -147,7 +155,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Recent members */}
-            <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+            <div style={stagger(3, 150)} className="reveal rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
               <h2 className="mb-4 font-bold text-brand-navy">Recent Members</h2>
               <div className="space-y-4">
                 {recentMembers.map((m) => (
@@ -164,7 +172,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Recent activities */}
-          <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="reveal rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
             <h2 className="mb-4 font-bold text-brand-navy">Recent Activities</h2>
             <ul className="space-y-4">
               {recentActivities.map((a, i) => (
