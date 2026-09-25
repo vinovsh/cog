@@ -14,6 +14,7 @@ import {
   whyJoin,
   membershipBenefits,
 } from "@/data";
+import { asset } from "@/lib/asset";
 
 // Placeholder portraits for the leadership messages until real photos are available
 const leaderPortraits = ["/images/doctors/doctor-1.avif", "/images/doctors/doctor-2.avif"];
@@ -155,7 +156,7 @@ export default function HomePage() {
                 </span>
                 <div className="relative mx-auto mt-4 h-24 w-24 overflow-hidden rounded-full bg-brand-blue-50 ring-4 ring-brand-blue-50 transition-shadow duration-300 group-hover:ring-brand-blue/30">
                   <Image
-                    src={leaderPortraits[i % leaderPortraits.length]}
+                    src={asset(leaderPortraits[i % leaderPortraits.length])}
                     alt={l.name}
                     fill
                     sizes="96px"
@@ -289,7 +290,7 @@ export default function HomePage() {
                 <div className="relative overflow-hidden">
                   <div className="relative aspect-[16/10]">
                     <Image
-                      src={n.image}
+                      src={asset(n.image)}
                       alt={n.title}
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"

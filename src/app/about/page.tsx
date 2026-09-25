@@ -5,6 +5,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
 import { missionPoints, values, objectives } from "@/data";
 import { stagger } from "@/lib/reveal";
+import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = { title: "About Us" };
 
@@ -63,7 +64,7 @@ export default function AboutPage() {
           <div style={stagger(1, 150)} className="reveal reveal-right">
             <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl">
               <Image
-                src="/images/about/main.webp"
+                src={asset("/images/about/main.webp")}
                 alt="COG doctors and nurses caring for a patient in a hospital ward"
                 fill
                 preload

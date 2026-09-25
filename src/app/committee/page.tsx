@@ -5,6 +5,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import { officeBearers, executiveMembers, advisoryBoard, type Member } from "@/data";
 import { SocialIcon } from "@/components/layout/Header";
 import { stagger } from "@/lib/reveal";
+import { asset } from "@/lib/asset";
 
 // Placeholder portraits until real member photos are available; alternated by position
 const portraits = ["/images/doctors/doctor-1.avif", "/images/doctors/doctor-2.avif"];
@@ -18,7 +19,7 @@ function MemberCard({ m, large, index = 0 }: { m: Member; large?: boolean; index
         }`}
       >
         <Image
-          src={portraits[index % portraits.length]}
+          src={asset(portraits[index % portraits.length])}
           alt={m.name}
           fill
           sizes={large ? "112px" : "80px"}

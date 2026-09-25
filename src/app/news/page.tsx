@@ -7,6 +7,7 @@ import PageHero from "@/components/ui/PageHero";
 import Icon from "@/components/ui/Icon";
 import { news, newsCategories } from "@/data";
 import { stagger } from "@/lib/reveal";
+import { asset } from "@/lib/asset";
 
 export default function NewsPage() {
   const [cat, setCat] = useState("All News");
@@ -31,7 +32,7 @@ export default function NewsPage() {
             <article className="reveal reveal-zoom card group mb-8 grid overflow-hidden md:grid-cols-2">
               <div className="relative min-h-56 overflow-hidden">
                 <Image
-                  src={featured.image}
+                  src={asset(featured.image)}
                   alt={featured.title}
                   fill
                   preload
@@ -58,7 +59,7 @@ export default function NewsPage() {
                 <article key={n.id} style={stagger(i, 90)} className="pop-in card group flex flex-col overflow-hidden hover:-translate-y-1">
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
-                      src={n.image}
+                      src={asset(n.image)}
                       alt={n.title}
                       fill
                       sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"

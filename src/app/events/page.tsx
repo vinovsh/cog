@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Icon from "@/components/ui/Icon";
 import { upcomingEvents, pastConferences, brochures } from "@/data";
 import { stagger } from "@/lib/reveal";
+import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = { title: "Conferences & Events" };
 
@@ -23,7 +24,7 @@ export default function EventsPage() {
         <div className="container-cog">
           <div className="reveal reveal-zoom relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-blue-600 to-brand-navy p-8 text-white sm:p-12">
             <Image
-              src="/images/news/conference-crowd.jpg"
+              src={asset("/images/news/conference-crowd.jpg")}
               alt=""
               fill
               preload
@@ -116,7 +117,7 @@ export default function EventsPage() {
               <article key={c.title} style={stagger(i, 140)} className="reveal card group overflow-hidden hover:-translate-y-1">
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
-                    src={c.image}
+                    src={asset(c.image)}
                     alt={c.title}
                     fill
                     sizes="(min-width: 640px) 33vw, 100vw"
